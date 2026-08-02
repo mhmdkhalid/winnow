@@ -37,6 +37,16 @@ target_include_directories(winnow_core PUBLIC src)
 target_link_libraries(winnow_core PUBLIC Threads::Threads)
 
 # ---------------------------------------------------------------------------
+# winnow_imaging -- the Qt implementation of PhotoDecoder.
+# The only part of the project that knows JPEG and PNG exist.
+# ---------------------------------------------------------------------------
+add_library(winnow_imaging STATIC
+    src/imaging/QtPhotoDecoder.cpp
+    src/imaging/QtPhotoDecoder.h
+)
+target_link_libraries(winnow_imaging PUBLIC winnow_core Qt6::Gui)
+
+# ---------------------------------------------------------------------------
 # Tests -- one executable per unit, registered with CTest
 # ---------------------------------------------------------------------------
 enable_testing()
@@ -57,3 +67,6 @@ winnow_add_test(duplicategrouper winnow_core)
 winnow_add_test(organizeplanner  winnow_core)
 winnow_add_test(threadpool       winnow_core)
 winnow_add_test(libraryscanner   winnow_core)
+
+# This one needs the real codec: it writes images to disk and reads them back.
+winnow_add_test(qtphotodecoder   winnow_imaging)
