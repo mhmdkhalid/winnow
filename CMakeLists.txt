@@ -47,6 +47,25 @@ add_library(winnow_imaging STATIC
 target_link_libraries(winnow_imaging PUBLIC winnow_core Qt6::Gui)
 
 # ---------------------------------------------------------------------------
+# winnow_ui -- the window and the background scan worker.
+# A library rather than loose files in the executable, so tooling can construct
+# the window without going through main().
+# ---------------------------------------------------------------------------
+add_library(winnow_ui STATIC
+    src/ui/MainWindow.cpp
+    src/ui/MainWindow.h
+    src/ui/ScanWorker.cpp
+    src/ui/ScanWorker.h
+)
+target_link_libraries(winnow_ui PUBLIC winnow_imaging Qt6::Widgets)
+
+# ---------------------------------------------------------------------------
+# Application -- main() only wires the pieces together
+# ---------------------------------------------------------------------------
+qt_add_executable(winnow src/main.cpp)
+target_link_libraries(winnow PRIVATE winnow_ui)
+
+# ---------------------------------------------------------------------------
 # Tests -- one executable per unit, registered with CTest
 # ---------------------------------------------------------------------------
 enable_testing()
