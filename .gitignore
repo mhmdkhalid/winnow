@@ -1,0 +1,17 @@
+# Build output
+build/
+build-*/
+
+# Generated demo data -- reproduce with:
+#   ./build/make_sample_library.exe sample-library
+sample-library/
+
+# Editor / IDE
+.vscode/
+.idea/
+*.user
+
+# OS
+Thumbs.db
+desktop.ini
+.DS_Store

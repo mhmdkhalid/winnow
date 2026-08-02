@@ -1,0 +1,8 @@
+# Normalise line endings: LF inside the repository, native in the working copy.
+# Without this, the same file can look entirely rewritten to someone who clones
+# it on a different operating system.
+* text=auto
+
+# Never touch binary files.
+*.png binary
+*.jpg binary
