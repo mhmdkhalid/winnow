@@ -18,8 +18,8 @@ find_package(Threads REQUIRED)
 # to be tested against images built in memory, with no photographs in the
 # repository and no codec involved.
 #
-# The dependency direction is one way: everything added later depends on core,
-# never the reverse.
+# The dependency direction is one way: imaging and ui depend on core, never the
+# reverse.
 # ---------------------------------------------------------------------------
 add_library(winnow_core STATIC
     src/core/CandidateIndex.cpp
@@ -64,6 +64,18 @@ target_link_libraries(winnow_ui PUBLIC winnow_imaging Qt6::Widgets)
 # ---------------------------------------------------------------------------
 qt_add_executable(winnow src/main.cpp)
 target_link_libraries(winnow PRIVATE winnow_ui)
+
+# ---------------------------------------------------------------------------
+# Developer utilities
+# ---------------------------------------------------------------------------
+# Builds a synthetic photo library with a known correct answer.
+qt_add_executable(make_sample_library tools/make_sample_library.cpp)
+target_link_libraries(make_sample_library PRIVATE winnow_core Qt6::Gui)
+target_include_directories(make_sample_library PRIVATE tests)
+
+# Renders the real window to PNG for the README.
+qt_add_executable(make_screenshot tools/make_screenshot.cpp)
+target_link_libraries(make_screenshot PRIVATE winnow_ui)
 
 # ---------------------------------------------------------------------------
 # Tests -- one executable per unit, registered with CTest
