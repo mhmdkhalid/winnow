@@ -4,6 +4,12 @@ Finds the near-duplicate photographs in a folder — the six frames of the same
 moment, the three attempts at the same shot — groups them, works out which one
 is sharpest, and helps you delete the rest safely.
 
+> **How this was built:** the code in this repository was written by an AI coding
+> assistant (Claude Code), not by me. I use the project to learn how its
+> algorithms and tools work. Code I wrote myself is in
+> [Student-Management](https://github.com/mhmdkhalid/Student-Management) and
+> [Patient-Queue-Management](https://github.com/mhmdkhalid/Patient-Queue-Management).
+
 *To winnow is to separate the grain from the chaff.*
 
 ![Winnow scanning a photo library](docs/screenshot.png)
@@ -78,7 +84,7 @@ Laplacian responds to abrupt brightness changes — in-focus edges. A sharp fram
 produces a wide spread of strong responses; blur smooths those away and the
 variance collapses.
 
-### 4. The date comes from the file, parsed by hand
+### 4. The date comes from the file, parsed without a library
 
 Sorting by file modification time is wrong: it records when the file was last
 *copied*, so restoring a backup makes an entire library appear to have been shot
@@ -116,7 +122,7 @@ Two separate layers, for two different reasons:
 
 - The scan runs on **its own thread** so the window keeps repainting and the
   Stop button keeps working.
-- Inside it, a hand-written **thread pool** spreads image decoding across every
+- Inside it, a custom **thread pool** spreads image decoding across every
   core, because decoding dominates the runtime completely.
 
 Work is claimed dynamically — each worker takes the next index when it becomes
